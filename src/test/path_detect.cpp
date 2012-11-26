@@ -17,10 +17,11 @@ void ProcessVideo(std::string videoName)
     {
         inputVideo >> src;              // read
         if( src.empty()) break;         // check if at end
-        res = pd.DetectPath(src);
+        res = pd.GetPath(src);
         cvtColor(res, colourRes, CV_GRAY2RGB);
         stacked = StackImages(src, colourRes);
         outputVideo << stacked;
+        imwrite("finalimage.jpg", stacked);
     }
 }
 
@@ -49,7 +50,7 @@ int main(int argc, char* argv[])
         PathDetect pd;
         cv::Mat image = cv::imread(vm["image"].as<std::string>());
         imwrite("originalimage.jpg", image);
-        cv::Mat result = pd.DetectPath(image);
+        cv::Mat result = pd.GetPath(image);
         imwrite("finalimage.jpg", result);
     }
 
