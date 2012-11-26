@@ -27,6 +27,31 @@ PathDetect::~PathDetect()
 {
 }
 
+cv::Mat PathDetect::GetPoints(const cv::Mat& input, std::vector<cv::Point>& points) const
+{
+    cv::Mat pathImage = GetPath(input);
+    int rows = pathImage.rows;
+    int cols = pathImage.cols;
+
+    for (int r = 0; r < rows; ++r)
+    {
+        int sum = 0;
+        int count = 0;
+        for (int c = 0; c < cols; ++c)
+        {
+            cv::Point currentPoint(c, r);
+            if (pathImage.at<unsigned char>(currentPoint) == PATH )
+            {
+                sum+=currentPoint.x;
+                count++;
+            }
+        }
+        if (sum > 0) points.push_back(cv::Point(sum/count,r));
+    }
+    return pathImage;
+}
+
+
 cv::Mat PathDetect::GetPath(const cv::Mat& input) const
 {
     cv::Mat watershedImage = WatershedImage(input);

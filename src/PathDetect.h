@@ -8,6 +8,7 @@ public:
     ~PathDetect();
     cv::Mat GetPath(const cv::Mat& input) const;
 
+    cv::Mat GetPoints(const cv::Mat& input, std::vector< cv::Point >& points) const;
 private:
     cv::Mat WatershedImage(const cv::Mat& input) const;
     void SetArea(cv::Mat& areaImage, unsigned char areaId, unsigned char areaValue) const;
